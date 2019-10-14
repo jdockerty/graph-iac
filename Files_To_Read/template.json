@@ -1,0 +1,163 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "0dd5ef4b-4c04-4c25-8c7b-be075113b550": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 461,
+                    "y": 176
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "1d2bf53e-ee03-45ef-8fcb-ce5d8871c46b": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 240,
+                    "y": 270
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "94c998d9-89e8-476f-98ae-ba67d0f084a7": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 300,
+                    "y": 180
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "0dd5ef4b-4c04-4c25-8c7b-be075113b550"
+                ]
+            },
+            "1320b3da-06a9-40ed-91c3-6507dd9b9dd3": {
+                "source": {
+                    "id": "1d2bf53e-ee03-45ef-8fcb-ce5d8871c46b"
+                },
+                "target": {
+                    "id": "94c998d9-89e8-476f-98ae-ba67d0f084a7"
+                },
+                "z": 0
+            },
+            "a8a39ece-f605-4452-86f2-8cdb1a3e69a7": {
+                "source": {
+                    "id": "94c998d9-89e8-476f-98ae-ba67d0f084a7"
+                },
+                "target": {
+                    "id": "0dd5ef4b-4c04-4c25-8c7b-be075113b550"
+                },
+                "z": 1
+            },
+            "7474954a-50c1-4999-9d43-6498d1e0c3bf": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 393,
+                    "y": 18
+                },
+                "z": 0,
+                "isassociatedwith": [
+                    "0dd5ef4b-4c04-4c25-8c7b-be075113b550",
+                    "94c998d9-89e8-476f-98ae-ba67d0f084a7"
+                ]
+            },
+            "dd3b39d9-016e-482b-88e9-b4a512a75d89": {
+                "source": {
+                    "id": "7474954a-50c1-4999-9d43-6498d1e0c3bf"
+                },
+                "target": {
+                    "id": "0dd5ef4b-4c04-4c25-8c7b-be075113b550"
+                },
+                "z": 2
+            },
+            "38352ff1-87d6-4481-a696-cb6b139c43b3": {
+                "source": {
+                    "id": "7474954a-50c1-4999-9d43-6498d1e0c3bf"
+                },
+                "target": {
+                    "id": "94c998d9-89e8-476f-98ae-ba67d0f084a7"
+                },
+                "z": 3
+            }
+        }
+    },
+    "Resources": {
+        "EC2I2XXQK": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "0dd5ef4b-4c04-4c25-8c7b-be075113b550"
+                }
+            }
+        },
+        "EC2V2VJRP": {
+            "Type": "AWS::EC2::Volume",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "1d2bf53e-ee03-45ef-8fcb-ce5d8871c46b"
+                }
+            }
+        },
+        "EC2I4APVG": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "94c998d9-89e8-476f-98ae-ba67d0f084a7"
+                }
+            },
+            "DependsOn": [
+                "EC2I2XXQK"
+            ]
+        },
+        "EC2VA21AFE": {
+            "Type": "AWS::EC2::VolumeAttachment",
+            "Properties": {
+                "VolumeId": {
+                    "Ref": "EC2V2VJRP"
+                },
+                "InstanceId": {
+                    "Ref": "EC2I4APVG"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "1320b3da-06a9-40ed-91c3-6507dd9b9dd3"
+                }
+            }
+        },
+        "ELBLB2Z5U9": {
+            "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+            "Properties": {
+                "Instances": [
+                    {
+                        "Ref": "EC2I2XXQK"
+                    },
+                    {
+                        "Ref": "EC2I4APVG"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "7474954a-50c1-4999-9d43-6498d1e0c3bf"
+                }
+            }
+        }
+    }
+}
