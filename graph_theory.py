@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib as plt
 import json
 from pathlib import Path
+from nested_lookup import get_all_keys, nested_lookup
 
 
 class graph_structure:
@@ -31,20 +32,33 @@ class graph_structure:
     def map_edges_to_nodes(self):
         current_JSON = self.get_json_to_dict()['Resources'] # Pulls the full JSON, BUT ONLY RESOURCES KEY AND AFTER
         print(current_JSON)
-        #counter = 0
+        counter = 0
         resources_list = list(current_JSON)
         print(resources_list)
         print("\n\n\n ----DICT----")
 
         for key in list(current_JSON.items()):
             sub_dict = key[1]
-            print(sub_dict)
+            print("Full Dict: ",sub_dict)
+            print("Keys only: ", get_all_keys(sub_dict))
+            print("\n")
             try:
-                if sub_dict['Ref'] or sub_dict['InstanceId'] or sub_dict['DependsOn']:
-                    self.node_dependencies[key] = sub_dict['']
+
+                if 'Ref' in get_all_keys(sub_dict):
+                    self.node_dependencies[resources_list[counter]] = nested_lookup('Ref', sub_dict)
+                    print(self.node_dependencies)
+                elif 'InstanceId' in get_all_keys(sub_dict):
+                    self.node_dependencies[resources_list[counter]] = nested_lookup('InstanceId', sub_dict)
+                    print(self.node_dependencies)
+                    print("Int")
+                elif 'DependsOn' in get_all_keys(sub_dict):
+                    self.node_dependencies[resources_list[counter]] = nested_lookup('DependsOn', sub_dict)
+                    print(self.node_dependencies)
+                    print("Depends")
+
                 # IF SUCCESSFUL THEN ADD THAT VALUE INTO THE DEPENDENCY
+                counter += 1
             except KeyError:
-                print("Skip")
                 continue
 
 test = graph_structure()
