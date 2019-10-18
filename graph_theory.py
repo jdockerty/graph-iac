@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from nested_lookup import get_all_keys, nested_lookup
 from collections.abc import Iterable
-
+import numpy as np
 
 class GraphStructure:
     path_to_file = ""
@@ -41,13 +41,29 @@ class GraphStructure:
 
     def get_resources_count(self):
         """
-        Used for retrieving the number of keys in the sub-dict of the Resources key as a list, this is directly
+        Used for retrieving the number of keys in the sub-dict of the Resources key as an integer, this is directly
         linked to the number of nodes required to construct the graph.
+
+        :return integer:
+        """
+        resources_json_as_dict = self.get_json_to_dict()
+        return len(resources_json_as_dict['Resources'].keys())
+
+    def draw_adj_matrix(self):
+        shaping = [2,self.get_resources_count()]
+        data = np.array(self.get_nodes())
+        print(data)
+        new_data = data.reshape(shaping)
+        return new_data
+
+    def get_nodes(self):
+        """
+        Retrieves the keys in the sub-dict for Resources key itself. These are the nodes required for the graph.
 
         :return list:
         """
         resources_json_as_dict = self.get_json_to_dict()
-        return resources_json_as_dict['Resources'].keys()
+        return list(resources_json_as_dict['Resources'].keys())
 
     def add_nodes(self):
         """
@@ -55,7 +71,7 @@ class GraphStructure:
 
         :return:
         """
-        self.current_graph.add_node(self.get_resources_count())
+        self.current_graph.add_nodes_from(self.get_nodes())
 
     def remove_nested_list_dependencies(self, nested_list):
         """
@@ -106,7 +122,6 @@ class GraphStructure:
                 counter += 1
             except KeyError:
                 continue
-        print(self.node_dependencies)
 
 
 
