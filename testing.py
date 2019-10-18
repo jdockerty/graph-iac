@@ -9,8 +9,6 @@ test.add_edges()
 nx.draw(test.current_graph, with_labels=True)
 
 plt.show()
-test.current_graph.clear()
-
 """
 Reference for networkx package.
 

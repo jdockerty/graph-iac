@@ -49,12 +49,12 @@ class GraphStructure:
         resources_json_as_dict = self.get_json_to_dict()
         return len(resources_json_as_dict['Resources'].keys())
 
-    def draw_adj_matrix(self):
-        shaping = [2,self.get_resources_count()]
-        data = np.array(self.get_nodes())
-        print(data)
-        new_data = data.reshape(shaping)
-        return new_data
+    # def draw_adj_matrix(self):
+    #     shaping = [2,self.get_resources_count()]
+    #     data = np.array(self.get_nodes())
+    #     print(data)
+    #     new_data = data.reshape(shaping)
+    #     return new_data
 
     def get_nodes(self):
         """
