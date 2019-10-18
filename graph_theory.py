@@ -91,9 +91,6 @@ class GraphStructure:
         for node, node_dependencies in tuple_of_edges:
             if isinstance(node_dependencies, Iterable):
                 for singular_node in node_dependencies:
-                    if 'Attachment' in singular_node:
-                        print(singular_node,'Attachment')
-                    print("Key_Iter: ", node, "Value_Iter:", singular_node)
                     self.current_graph.add_edge(node,singular_node)
 
     def remove_nested_list_dependencies(self, nested_list):
