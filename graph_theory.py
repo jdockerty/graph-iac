@@ -73,6 +73,29 @@ class GraphStructure:
         """
         self.current_graph.add_nodes_from(self.get_nodes())
 
+    def add_edges(self):
+
+        """
+        For each k,v in the tuple (node, dependent_node)
+            if v is Iterable:
+                for v_2 in v:
+
+            else:
+                add_edge(k,v)
+
+
+        """
+
+        tuple_of_edges = tuple(self.node_dependencies.items())
+        print(tuple_of_edges)
+        for node, node_dependencies in tuple_of_edges:
+            if isinstance(node_dependencies, Iterable):
+                for singular_node in node_dependencies:
+                    if 'Attachment' in singular_node:
+                        print(singular_node,'Attachment')
+                    print("Key_Iter: ", node, "Value_Iter:", singular_node)
+                    self.current_graph.add_edge(node,singular_node)
+
     def remove_nested_list_dependencies(self, nested_list):
         """
         Utility function for flattening a list, sometimes dependencies will return a nested/junk list which makes it
