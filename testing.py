@@ -1,14 +1,13 @@
 from graph_theory import GraphStructure
-import networkx as nx
-import matplotlib.pyplot as plt
+
 test = GraphStructure()
-test.set_filepath(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template_two.json')
+test.set_filepath(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template.yml')
 test.add_nodes()
 test.set_node_dependencies()
 test.add_edges()
-nx.draw(test.current_graph, with_labels=True)
+test.draw_and_show()
 
-plt.show()
+
 """
 Reference for networkx package.
 

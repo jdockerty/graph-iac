@@ -1,0 +1,167 @@
+AWSTemplateFormatVersion: 2010-09-09
+Metadata:
+  'AWS::CloudFormation::Designer':
+    982f8b8a-f569-4798-a5c7-5a792d65c7fe:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 410
+        'y': 200
+      z: 0
+      embeds: []
+    2efdc3cf-4019-485b-a791-35f93167ddce:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 180
+        'y': 200
+      z: 0
+      embeds: []
+    123ecb8e-e9cc-480c-9909-0508d3a251e3:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 50
+        'y': 200
+      z: 0
+      embeds: []
+      dependson:
+        - 2efdc3cf-4019-485b-a791-35f93167ddce
+    42ebf371-2910-4b7d-ac25-94080f996b20:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 560
+        'y': 200
+      z: 0
+      embeds: []
+      dependson:
+        - 982f8b8a-f569-4798-a5c7-5a792d65c7fe
+    5f6c1cc5-54a3-440b-904a-97171af813e1:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 289
+        'y': 93
+      z: 0
+      embeds: []
+      isassociatedwith:
+        - 2efdc3cf-4019-485b-a791-35f93167ddce
+        - 982f8b8a-f569-4798-a5c7-5a792d65c7fe
+    522b7220-f18c-4526-b196-ee0abbfe4a37:
+      source:
+        id: 5f6c1cc5-54a3-440b-904a-97171af813e1
+      target:
+        id: 2efdc3cf-4019-485b-a791-35f93167ddce
+      z: 1
+    39175c7e-a24e-4b4c-99ca-313e9c2d859e:
+      source:
+        id: 5f6c1cc5-54a3-440b-904a-97171af813e1
+      target:
+        id: 982f8b8a-f569-4798-a5c7-5a792d65c7fe
+      z: 2
+    09feb5e5-a17c-47c4-be1f-31de4aafd93e:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 170
+        'y': 320
+      z: 0
+      embeds: []
+      dependson:
+        - 2efdc3cf-4019-485b-a791-35f93167ddce
+    7fcbf8ec-65fc-4d34-98e2-4020e494d139:
+      source:
+        id: 09feb5e5-a17c-47c4-be1f-31de4aafd93e
+      target:
+        id: 2efdc3cf-4019-485b-a791-35f93167ddce
+      z: 11
+    3acb59ee-be46-4795-9368-6b61a72ae222:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 740
+        'y': 200
+      z: 0
+      embeds: []
+      dependson:
+        - 42ebf371-2910-4b7d-ac25-94080f996b20
+    ab15789c-5986-4f8a-80af-8cb0c64c34af:
+      source:
+        id: 3acb59ee-be46-4795-9368-6b61a72ae222
+      target:
+        id: 42ebf371-2910-4b7d-ac25-94080f996b20
+      z: 11
+    8fe28ebb-1ddf-4bdd-9a0c-c27309df26f9:
+      source:
+        id: 42ebf371-2910-4b7d-ac25-94080f996b20
+      target:
+        id: 982f8b8a-f569-4798-a5c7-5a792d65c7fe
+      z: 11
+    3fdc7db7-d060-4b01-9dc1-2b3cd35e3f3c:
+      source:
+        id: 123ecb8e-e9cc-480c-9909-0508d3a251e3
+      target:
+        id: 2efdc3cf-4019-485b-a791-35f93167ddce
+      z: 12
+Resources:
+  EC2one:
+    Type: 'AWS::EC2::Instance'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 982f8b8a-f569-4798-a5c7-5a792d65c7fe
+  EC2two:
+    Type: 'AWS::EC2::Instance'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 2efdc3cf-4019-485b-a791-35f93167ddce
+  Volumetwo:
+    Type: 'AWS::EC2::Volume'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 123ecb8e-e9cc-480c-9909-0508d3a251e3
+    DependsOn:
+      - EC2two
+  Volumeone:
+    Type: 'AWS::EC2::Volume'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 42ebf371-2910-4b7d-ac25-94080f996b20
+    DependsOn:
+      - EC2one
+  ELB:
+    Type: 'AWS::ElasticLoadBalancing::LoadBalancer'
+    Properties:
+      Instances:
+        - Ref: EC2two
+        - Ref: EC2one
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 5f6c1cc5-54a3-440b-904a-97171af813e1
+  LambdaFunc:
+    Type: 'AWS::Lambda::Function'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 09feb5e5-a17c-47c4-be1f-31de4aafd93e
+    DependsOn:
+      - EC2two
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 3acb59ee-be46-4795-9368-6b61a72ae222
+    DependsOn:
+      - Volumeone

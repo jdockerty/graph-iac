@@ -1,6 +1,7 @@
 import networkx as nx
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import json
+import ruamel.yaml
 from pathlib import Path
 from nested_lookup import get_all_keys, nested_lookup
 from collections.abc import Iterable
@@ -10,6 +11,7 @@ class GraphStructure:
     path_to_file = ""
     current_graph = None
     node_dependencies = {}
+    file_format = ""
 
     def __init__(self, directed=True):
         """
@@ -27,10 +29,45 @@ class GraphStructure:
 
         :return dict:
         """
-        file_path = Path(self.path_to_file)
-        with file_path.open(mode='r') as my_file:
+        filepath = Path(self.path_to_file)
+        with filepath.open(mode='r') as my_file:
             full_json_to_dict = dict(json.load(my_file))
             return full_json_to_dict
+
+    def get_file_to_dict(self):
+        self.check_file_format()
+
+        if self.file_format == 'YAML':
+            return self.is_yaml_format()
+        elif self.file_format == 'JSON':
+            return self.get_json_to_dict()
+        elif self.file_format == 'TERRAFORM':
+            pass
+
+    def check_file_format(self):
+        try:
+            if '.yml' in self.path_to_file:
+                self.file_format = "YAML"
+
+            elif '.json' in self.path_to_file:
+                self.file_format = "JSON"
+
+            elif '.tf' in self.path_to_file:
+                self.file_format = "TERRAFORM"
+
+        except FileNotFoundError:
+            raise FileNotFoundError("You must set the file path using the set_filepath method "
+                                    "before this is used.")
+
+    def is_yaml_format(self):
+        if 'YAML' in self.file_format:
+            yaml = ruamel.yaml.YAML(typ='safe')
+            filepath = Path(self.path_to_file)
+            with filepath.open(mode='r') as yml_file:
+                yml_data = yaml.load(yml_file)
+                return yml_data
+            # Cannot seem to resolve !Ref short form, although replacing this to
+            # full function name seems to work for now.
 
     def set_filepath(self, filepath):
         """
@@ -49,15 +86,8 @@ class GraphStructure:
 
         :return integer:
         """
-        resources_json_as_dict = self.get_json_to_dict()
+        resources_json_as_dict = self.get_file_to_dict()
         return len(resources_json_as_dict['Resources'].keys())
-
-    # def draw_adj_matrix(self):
-    #     shaping = [2,self.get_resources_count()]
-    #     data = np.array(self.get_nodes())
-    #     print(data)
-    #     new_data = data.reshape(shaping)
-    #     return new_data
 
     def get_nodes(self):
         """
@@ -65,7 +95,7 @@ class GraphStructure:
 
         :return list:
         """
-        resources_json_as_dict = self.get_json_to_dict()
+        resources_json_as_dict = self.get_file_to_dict()
         return list(resources_json_as_dict['Resources'].keys())
 
     def add_nodes(self):
@@ -114,6 +144,7 @@ class GraphStructure:
                 flat_list.append(item)
         return flat_list
 
+
     def set_node_dependencies(self):
         """
         Builds the nodes arc's by mapping the other nodes that they are dependant on. This is done through searching for
@@ -122,7 +153,7 @@ class GraphStructure:
 
         :return:
         """
-        current_json = self.get_json_to_dict()['Resources'] # Pulls the full JSON, BUT ONLY RESOURCES KEY AND AFTER
+        current_json = self.get_file_to_dict()['Resources'] # Pulls the full JSON, BUT ONLY RESOURCES KEY AND AFTER
         counter = 0
         resources_list = list(current_json)
 
@@ -146,7 +177,12 @@ class GraphStructure:
             except KeyError:
                 continue
 
-
+    def draw_and_show(self, labels_on=True):
+        nx.draw(self.current_graph, with_labels=labels_on)
+        plt.draw()
+        plt.waitforbuttonpress()
+        plt.close()
+        return True
 
 
 # IDEA - TRAVERSE RESOURCES SUB-DICT AND READ FOR DependsOn/Other dependencies, if exists then can add to dict. Map edges
