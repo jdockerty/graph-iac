@@ -4,18 +4,21 @@ import json
 from pathlib import Path
 from nested_lookup import get_all_keys, nested_lookup
 from collections.abc import Iterable
-import numpy as np
+
 
 class GraphStructure:
     path_to_file = ""
     current_graph = None
     node_dependencies = {}
 
-    def __init__(self):
+    def __init__(self, directed=True):
         """
         Constructor for initial class, creates an empty graph.
         """
-        self.current_graph = nx.Graph()
+        if directed:
+            self.current_graph = nx.DiGraph()
+        if not directed:
+            self.current_graph = nx.Graph()
 
     def get_json_to_dict(self):
         """
