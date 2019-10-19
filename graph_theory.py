@@ -15,7 +15,8 @@ class GraphStructure:
 
     def __init__(self, directed=True):
         """
-        Constructor for initial class, creates an empty graph.
+        Constructor for initial class, creates an empty graph. The user can specify whether they want a directed or
+        undirected graph based on changing the directed default parameter.
         """
         if directed:
             self.current_graph = nx.DiGraph()
@@ -35,6 +36,12 @@ class GraphStructure:
             return full_json_to_dict
 
     def get_file_to_dict(self):
+        """
+        Used for running the relevant method based on the file_format variable, this has to be populated first, hence
+        why the check_file_format() is called beforehand - this covers the user needing to do it.
+
+        :return:
+        """
         self.check_file_format()
 
         if self.file_format == 'YAML':
@@ -45,6 +52,11 @@ class GraphStructure:
             pass
 
     def check_file_format(self):
+        """
+        Sets the file_format variable based on what the filepath contains: .yml, .json, and .tf.
+
+        :return:
+        """
         try:
             if '.yml' in self.path_to_file:
                 self.file_format = "YAML"
@@ -60,6 +72,12 @@ class GraphStructure:
                                     "before this is used.")
 
     def is_yaml_format(self):
+        """
+        Method which checks whether the filepath provided to the template contains .yml, which implies that the file
+        itself is a YAML file, therefore it needs to be converted into a dictionary to be worked with.
+
+        :return:
+        """
         if 'YAML' in self.file_format:
             yaml = ruamel.yaml.YAML(typ='safe')
             filepath = Path(self.path_to_file)
@@ -107,24 +125,21 @@ class GraphStructure:
         self.current_graph.add_nodes_from(self.get_nodes())
 
     def add_edges(self):
-
         """
-        For each k,v in the tuple (node, dependent_node)
-            if v is Iterable:
-                for v_2 in v:
+        This maps the edges between nodes based on their dependencies. This is achieved by pulling a set of dict_keys
+        by way of the .items() on a dictionary. This is converted to a tuple and then iterates over it in the
+        appropriate format (node, node_dependencies), if the 'node_depedencies' variable is an iterable object
+        (list etc.) it will then iterate into that and map the particular node dependency to the initial node, this is
+        the outer-tuple element.
 
-            else:
-                add_edge(k,v)
-
-
+        :return:
         """
 
         tuple_of_edges = tuple(self.node_dependencies.items())
-        print(tuple_of_edges)
         for node, node_dependencies in tuple_of_edges:
             if isinstance(node_dependencies, Iterable):
                 for singular_node in node_dependencies:
-                    self.current_graph.add_edge(node,singular_node)
+                    self.current_graph.add_edge(node, singular_node)
 
     def remove_nested_list_dependencies(self, nested_list):
         """
@@ -144,10 +159,37 @@ class GraphStructure:
                 flat_list.append(item)
         return flat_list
 
+    # def graph_algorithms(self):
+    #     nx.algorithms.flow.maximum_flow(self.current_graph,'S3Bucket','EC2two')
+
+    def full_build_graph(self, filepath):
+        """
+        Utility function that circumvents having to call each individual method in the correct order, only a
+        filepath is specified and the rest is handled.
+
+        :param filepath:
+        :return:
+        """
+        self.set_filepath(filepath)
+        self.add_nodes()
+        self.set_node_dependencies()
+        self.add_edges()
+        return True
+
+    def save_graph_output(self, output_filename):
+        """
+        Save the drawn graph as a .png image, with the user providing the filename. Returns True if this was successful.
+
+        :param output_filename:
+        :return:
+        """
+        nx.draw_planar(self.current_graph, with_labels=True)
+        plt.savefig("Saved_Graphs/{}.png".format(output_filename), format="PNG")
+        return True
 
     def set_node_dependencies(self):
         """
-        Builds the nodes arc's by mapping the other nodes that they are dependant on. This is done through searching for
+        Builds the nodes edges by mapping the other nodes that they are dependant on. This is done through searching for
         key words: DependsOn, InstanceId, and Ref. The keywords are used to show that a particular resource is linked
         in someway to another, so this should be shown on the graph.
 
@@ -156,7 +198,6 @@ class GraphStructure:
         current_json = self.get_file_to_dict()['Resources'] # Pulls the full JSON, BUT ONLY RESOURCES KEY AND AFTER
         counter = 0
         resources_list = list(current_json)
-
 
         for key in list(current_json.items()):
             sub_dict = key[1]
@@ -167,6 +208,7 @@ class GraphStructure:
 
                 elif 'InstanceId' in get_all_keys(sub_dict):
                     self.node_dependencies[resources_list[counter]] = nested_lookup('InstanceId', sub_dict)
+
                 elif 'DependsOn' in get_all_keys(sub_dict):
                     #  This part could be replicated into other statements if they present
                     #  the nested list issue in the future.
@@ -178,12 +220,12 @@ class GraphStructure:
                 continue
 
     def draw_and_show(self, labels_on=True):
-        nx.draw(self.current_graph, with_labels=labels_on)
-        plt.draw()
+        nx.draw_planar(self.current_graph, with_labels=labels_on)
         plt.waitforbuttonpress()
         plt.close()
         return True
 
 
-# IDEA - TRAVERSE RESOURCES SUB-DICT AND READ FOR DependsOn/Other dependencies, if exists then can add to dict. Map edges
-# from that generated dict.
+"""
+NOTE - ADD COMMENTS IN LINE TO THE CONFUSING FUNCTIONS get_files_to_dict etc.
+"""

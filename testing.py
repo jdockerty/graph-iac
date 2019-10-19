@@ -1,12 +1,8 @@
 from graph_theory import GraphStructure
 
 test = GraphStructure()
-test.set_filepath(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template.yml')
-test.add_nodes()
-test.set_node_dependencies()
-test.add_edges()
+test.full_build_graph(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template.yml')
 test.draw_and_show()
-
 
 """
 Reference for networkx package.
