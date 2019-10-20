@@ -198,6 +198,19 @@ class GraphStructure:
         self.add_edges()
         return True
 
+    def full_build_graph_with_weights(self, filepath, edge_weight):
+        """
+        Similar usage as full_build_graph_ except this includes adding weighted edges between nodes.
+
+        :param filepath, edge_weight:
+        :return:
+        """
+        self.set_filepath(filepath)
+        self.add_nodes()
+        self.set_node_dependencies()
+        self.add_edge_weights(edge_weight)
+        return True
+
     def save_graph_output(self, output_filename):
         """
         Save the drawn graph as a .png image, with the user providing the filename. Returns True if this was successful.

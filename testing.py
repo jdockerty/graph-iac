@@ -2,8 +2,7 @@ from graph_theory import GraphStructure
 
 test = GraphStructure()
 
-test.full_build_graph(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template.yml')
-test.add_edge_weights(1)
+test.full_build_graph_with_weights(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template.yml', 3)
 test.draw_and_show_with_edge_labels()
 
 
