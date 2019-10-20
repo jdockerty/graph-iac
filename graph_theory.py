@@ -202,7 +202,8 @@ class GraphStructure:
         """
         Similar usage as full_build_graph_ except this includes adding weighted edges between nodes.
 
-        :param filepath, edge_weight:
+        :param filepath:
+        :param edge_weight:
         :return:
         """
         self.set_filepath(filepath)
@@ -211,15 +212,21 @@ class GraphStructure:
         self.add_edge_weights(edge_weight)
         return True
 
-    def save_graph_output(self, output_filename):
+    def save_graph_output(self, output_filename, with_edge_labels=False):
         """
         Save the drawn graph as a .png image, with the user providing the filename. Returns True if this was successful.
 
         :param output_filename:
+        :param with_edge_labels:
         :return:
         """
-        nx.draw_planar(self.current_graph, with_labels=True)
-        plt.savefig("Saved_Graphs/{}.png".format(output_filename), format="PNG")
+        if with_edge_labels:
+            nx.draw_planar(self.current_graph, with_labels=True)
+            nx.draw_networkx_edge_labels(self.current_graph, pos=nx.planar_layout(self.current_graph))
+            plt.savefig("Saved_Graphs/{}.png".format(output_filename), format="PNG")
+        else:
+            nx.draw_planar(self.current_graph, with_labels=True)
+            plt.savefig("Saved_Graphs/{}.png".format(output_filename), format="PNG")
         return True
 
     def set_node_dependencies(self):
