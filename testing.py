@@ -1,8 +1,11 @@
 from graph_theory import GraphStructure
 
 test = GraphStructure()
+
 test.full_build_graph(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template.yml')
-test.draw_and_show()
+test.add_edge_weights(1)
+test.draw_and_show_with_edge_labels()
+
 
 """
 Reference for networkx package.

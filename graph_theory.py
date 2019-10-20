@@ -71,6 +71,14 @@ class GraphStructure:
             raise FileNotFoundError("You must set the file path using the set_filepath method "
                                     "before this is used.")
 
+    def get_current_nodes(self):
+        """
+        Utility function to return a list of nodes on the current graph.
+
+        :return:
+        """
+        return self.current_graph.nodes
+
     def is_yaml_format(self):
         """
         Method which checks whether the filepath provided to the template contains .yml, which implies that the file
@@ -127,19 +135,33 @@ class GraphStructure:
     def add_edges(self):
         """
         This maps the edges between nodes based on their dependencies. This is achieved by pulling a set of dict_keys
-        by way of the .items() on a dictionary. This is converted to a tuple and then iterates over it in the
-        appropriate format (node, node_dependencies), if the 'node_depedencies' variable is an iterable object
+        by way of the .items() on the node_dependencies dictionary, a tuple pair is returned and then iterates over
+        it in the appropriate format (node, node_dependencies), if the 'node_depedencies' variable is an iterable object
         (list etc.) it will then iterate into that and map the particular node dependency to the initial node, this is
         the outer-tuple element.
 
         :return:
         """
 
-        tuple_of_edges = tuple(self.node_dependencies.items())
-        for node, node_dependencies in tuple_of_edges:
+        for node, node_dependencies in self.node_dependencies.items():
             if isinstance(node_dependencies, Iterable):
                 for singular_node in node_dependencies:
                     self.current_graph.add_edge(node, singular_node)
+
+    def add_edge_weights(self, edge_weights):
+        """
+        Adds edge weights based on a user value, currently this adds a weight to every edge and cannot be configured
+        to specific (u, v) pairs. This functions in a similar manner to adding nodes, with the exception of adding the
+        weight parameter
+
+        :param edge_weights:
+        :return:
+        """
+        for node, node_dependencies in self.node_dependencies.items():
+            if isinstance(node_dependencies, Iterable):
+                for singular_node in node_dependencies:
+                    self.current_graph.add_edge(node, singular_node, weight=edge_weights)
+
 
     def remove_nested_list_dependencies(self, nested_list):
         """
@@ -159,8 +181,8 @@ class GraphStructure:
                 flat_list.append(item)
         return flat_list
 
-    # def graph_algorithms(self):
-    #     nx.algorithms.flow.maximum_flow(self.current_graph,'S3Bucket','EC2two')
+    def graph_algorithms(self):
+        nx.algorithms.flow.maximum_flow(self.current_graph,'S3Bucket','Volumetwo')
 
     def full_build_graph(self, filepath):
         """
@@ -220,12 +242,25 @@ class GraphStructure:
                 continue
 
     def draw_and_show(self, labels_on=True):
+        """
+        Draws the graph and then displays it in an interactive window with node labels turned on, pressing any key
+        or clicking inside of the window will close the window. You can move the window without it closing.
+
+        :param labels_on:
+        :return:
+        """
         nx.draw_planar(self.current_graph, with_labels=labels_on)
         plt.waitforbuttonpress()
-        plt.close()
         return True
 
+    def draw_and_show_with_edge_labels(self):
+        """
+        Draws the graph and displays it with node/edge labels displays. This is somewhat experimental and can be buggy
+        dependent on the number of nodes and how edge labels are displayed.
 
-"""
-NOTE - ADD COMMENTS IN LINE TO THE CONFUSING FUNCTIONS get_files_to_dict etc.
-"""
+        :return:
+        """
+        nx.draw_planar(self.current_graph, with_labels=True)
+        nx.draw_networkx_edge_labels(self.current_graph, pos=nx.planar_layout(self.current_graph))
+        plt.waitforbuttonpress()
+        return True
