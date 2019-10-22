@@ -1,0 +1,422 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "2b61431d-2195-4cab-8754-4b8dbc257562": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 250,
+                    "y": 140
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "2be128d4-c5b4-471f-87a0-89a9f844712c",
+                    "0a1f75e6-ded5-49ac-885f-fbee318d6520"
+                ]
+            },
+            "0a1f75e6-ded5-49ac-885f-fbee318d6520": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 340,
+                    "y": 50
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "b3e5b2f4-6c3b-4da9-a194-dda32e5e4382"
+                ],
+                "dependson": [
+                    "2b61431d-2195-4cab-8754-4b8dbc257562",
+                    "1208e9ab-e358-46cf-a991-f07ec878716b"
+                ]
+            },
+            "2be128d4-c5b4-471f-87a0-89a9f844712c": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 330,
+                    "y": 250
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "7ae1e2be-4f5d-4ab5-a39e-746511ad6adb",
+                    "9c7a5edd-af52-45c2-9bfe-10f7b49cbac9"
+                ],
+                "dependson": [
+                    "2b61431d-2195-4cab-8754-4b8dbc257562"
+                ]
+            },
+            "b3e5b2f4-6c3b-4da9-a194-dda32e5e4382": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 520,
+                    "y": 20
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "a1d084ec-5227-4952-8049-80737db3ecb2"
+                ]
+            },
+            "1208e9ab-e358-46cf-a991-f07ec878716b": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 520,
+                    "y": 100
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "a1d084ec-5227-4952-8049-80737db3ecb2"
+                ]
+            },
+            "9c7a5edd-af52-45c2-9bfe-10f7b49cbac9": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 520,
+                    "y": 200
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "00cf590f-e113-41cb-8f94-3cba5325c2d2"
+                ]
+            },
+            "7ae1e2be-4f5d-4ab5-a39e-746511ad6adb": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 520,
+                    "y": 310
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "bcb65254-b4b8-431d-b0cf-6826e05b8388",
+                    "51faf297-b930-48b4-9bc4-d501bc17d7e6"
+                ]
+            },
+            "a1d084ec-5227-4952-8049-80737db3ecb2": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 670,
+                    "y": 60
+                },
+                "z": 0,
+                "embeds": [],
+                "isassociatedwith": [
+                    "190db5a9-be6e-465a-bcf0-e25ca5fd8b89"
+                ],
+                "dependson": [
+                    "b3e5b2f4-6c3b-4da9-a194-dda32e5e4382",
+                    "1208e9ab-e358-46cf-a991-f07ec878716b",
+                    "190db5a9-be6e-465a-bcf0-e25ca5fd8b89"
+                ]
+            },
+            "190db5a9-be6e-465a-bcf0-e25ca5fd8b89": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 780,
+                    "y": 60
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "f6c54716-1a50-47c8-a3e6-9d70640e9d4b",
+                    "51faf297-b930-48b4-9bc4-d501bc17d7e6"
+                ]
+            },
+            "00cf590f-e113-41cb-8f94-3cba5325c2d2": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 630,
+                    "y": 250
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "9c7a5edd-af52-45c2-9bfe-10f7b49cbac9"
+                ]
+            },
+            "bcb65254-b4b8-431d-b0cf-6826e05b8388": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 520,
+                    "y": 430
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "7ae1e2be-4f5d-4ab5-a39e-746511ad6adb"
+                ]
+            },
+            "51faf297-b930-48b4-9bc4-d501bc17d7e6": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 790,
+                    "y": 250
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "9c7a5edd-af52-45c2-9bfe-10f7b49cbac9",
+                    "7ae1e2be-4f5d-4ab5-a39e-746511ad6adb",
+                    "f6c54716-1a50-47c8-a3e6-9d70640e9d4b"
+                ]
+            },
+            "2b3195ac-a629-4fb7-9fbe-681e5fdc198b": {
+                "source": {
+                    "id": "a1d084ec-5227-4952-8049-80737db3ecb2",
+                    "selector": "g:nth-child(1) g:nth-child(4) g:nth-child(1) circle:nth-child(1)     ",
+                    "port": "AWS::RefLink-AWS::EFS::FileSystem-FileSystemId"
+                },
+                "target": {
+                    "id": "190db5a9-be6e-465a-bcf0-e25ca5fd8b89"
+                },
+                "z": 13
+            },
+            "a55fb9d0-f9cf-42a2-bcfe-8bb21afc6155": {
+                "source": {
+                    "id": "a1d084ec-5227-4952-8049-80737db3ecb2"
+                },
+                "target": {
+                    "id": "190db5a9-be6e-465a-bcf0-e25ca5fd8b89"
+                },
+                "z": 12
+            },
+            "6b1ed7fd-eeca-4abd-8d5f-7b55874565b6": {
+                "source": {
+                    "id": "190db5a9-be6e-465a-bcf0-e25ca5fd8b89"
+                },
+                "target": {
+                    "id": "51faf297-b930-48b4-9bc4-d501bc17d7e6"
+                },
+                "z": 13
+            }
+        }
+    },
+    "Resources": {
+        "ELBMain": {
+            "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "2b61431d-2195-4cab-8754-4b8dbc257562"
+                }
+            },
+            "DependsOn": [
+                "ELBSplitTwo",
+                "ELBSplitOne"
+            ]
+        },
+        "ELBSplitOne": {
+            "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+            "Properties": {
+                "Instances": [
+                    {
+                        "Ref": "EC2I2NCOK"
+                    },
+                    {
+                        "Ref": "EC2I11EZI"
+                    },
+                    {
+                        "Ref": "EC2Four"
+                    },
+                    {
+                        "Ref": "EC2Three"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "0a1f75e6-ded5-49ac-885f-fbee318d6520"
+                }
+            },
+            "DependsOn": [
+                "ELBMain",
+                "EC2Four"
+            ]
+        },
+        "ELBSplitTwo": {
+            "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+            "Properties": {
+                "Instances": [
+                    {
+                        "Ref": "EC2IT01Z"
+                    },
+                    {
+                        "Ref": "EC2I14LR5"
+                    },
+                    {
+                        "Ref": "EC2Two"
+                    },
+                    {
+                        "Ref": "EC2One"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "2be128d4-c5b4-471f-87a0-89a9f844712c"
+                }
+            },
+            "DependsOn": [
+                "ELBMain"
+            ]
+        },
+        "EC2Three": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "b3e5b2f4-6c3b-4da9-a194-dda32e5e4382"
+                }
+            },
+            "DependsOn": [
+                "EFSMountTarget"
+            ]
+        },
+        "EC2Four": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "1208e9ab-e358-46cf-a991-f07ec878716b"
+                }
+            },
+            "DependsOn": [
+                "EFSMountTarget"
+            ]
+        },
+        "EC2One": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "Volumes": [
+                    {
+                        "VolumeId": {
+                            "Ref": "EC2OneVol"
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "9c7a5edd-af52-45c2-9bfe-10f7b49cbac9"
+                }
+            }
+        },
+        "EC2Two": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "7ae1e2be-4f5d-4ab5-a39e-746511ad6adb"
+                }
+            },
+            "DependsOn": [
+                "EC2TwoVol",
+                "BackupsTwo"
+            ]
+        },
+        "EFSMountTarget": {
+            "Type": "AWS::EFS::MountTarget",
+            "Properties": {
+                "FileSystemId": {
+                    "Ref": "EFS"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "a1d084ec-5227-4952-8049-80737db3ecb2"
+                }
+            },
+            "DependsOn": [
+                "EC2Three",
+                "EC2Four",
+                "EFS"
+            ]
+        },
+        "EFS": {
+            "Type": "AWS::EFS::FileSystem",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "190db5a9-be6e-465a-bcf0-e25ca5fd8b89"
+                }
+            },
+            "DependsOn": [
+                "Glacier",
+                "BackupsTwo"
+            ]
+        },
+        "EC2OneVol": {
+            "Type": "AWS::EC2::Volume",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "00cf590f-e113-41cb-8f94-3cba5325c2d2"
+                }
+            },
+            "DependsOn": [
+                "EC2IT01Z"
+            ]
+        },
+        "EC2TwoVol": {
+            "Type": "AWS::EC2::Volume",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "bcb65254-b4b8-431d-b0cf-6826e05b8388"
+                }
+            },
+            "DependsOn": [
+                "EC2I14LR5"
+            ]
+        },
+        "BackupsTwo": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {},
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "51faf297-b930-48b4-9bc4-d501bc17d7e6"
+                }
+            }
+        }
+    }
+}

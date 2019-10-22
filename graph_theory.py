@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import json
 import ruamel.yaml
+import random
 from pathlib import Path
 from nested_lookup import get_all_keys, nested_lookup
 from collections.abc import Iterable
@@ -79,6 +80,44 @@ class GraphStructure:
         """
         return self.current_graph.nodes
 
+    def get_current_edges(self):
+        """
+        Utility function to return tuple pairs of connecting nodes.
+
+        :return:
+        """
+        return self.current_graph.edges
+
+    def set_edge_weights(self, random_input=False):
+        for node_one, node_two in self.get_current_edges():
+            if random_input:
+                random_weight = random.randint(1, 25)
+                self.current_graph.add_edge(node_one, node_two, weight=random_weight)
+                print("({}, {}) edge weight set to: {} ".format(node_one, node_two, random_weight))
+            else:
+                edge_weight = int(input("Set the weight for ({}, {}) ".format(node_one, node_two)))
+                self.current_graph.add_edge(node_one, node_two, weight=edge_weight)
+
+    def set_edge_capacities(self, random_input=False):
+        """
+        Allows a user to manually set the capacity of each edge for a tuple pair that is returned in the form of (u, v).
+        A helpful aid to this is outputting the graph beforehand, so that it is viewable and the edges are known.
+
+        The random_input parameter serves as a mechanism to quickly set a capacity value of between 1 and 25 for all
+        edges on the graph, this is mainly for speed/testing purposes.
+
+        :param random_input:
+        :return:
+        """
+        for node_one, node_two in self.get_current_edges():
+            if random_input:
+                random_capacity = random.randint(1, 25)
+                self.current_graph.add_edge(node_one, node_two, capacity=random_capacity)
+                print("({}, {}) edge capacity set to: {} ".format(node_one, node_two, random_capacity))
+            else:
+                capacity_val = int(input("Set the capacity for ({}, {}) ".format(node_one, node_two)))
+                self.current_graph.add_edge(node_one, node_two, capacity=capacity_val)
+
     def is_yaml_format(self):
         """
         Method which checks whether the filepath provided to the template contains .yml, which implies that the file
@@ -148,7 +187,7 @@ class GraphStructure:
                 for singular_node in node_dependencies:
                     self.current_graph.add_edge(node, singular_node)
 
-    def add_edge_weights(self, edge_weights):
+    def add_all_edge_weights(self, edge_weights):
         """
         Adds edge weights based on a user value, currently this adds a weight to every edge and cannot be configured
         to specific (u, v) pairs. This functions in a similar manner to adding nodes, with the exception of adding the
@@ -161,7 +200,6 @@ class GraphStructure:
             if isinstance(node_dependencies, Iterable):
                 for singular_node in node_dependencies:
                     self.current_graph.add_edge(node, singular_node, weight=edge_weights)
-
 
     def remove_nested_list_dependencies(self, nested_list):
         """
@@ -181,8 +219,8 @@ class GraphStructure:
                 flat_list.append(item)
         return flat_list
 
-    def graph_algorithms(self):
-        nx.algorithms.flow.maximum_flow(self.current_graph,'S3Bucket','Volumetwo')
+    def graph_flow_analysis(self, source_node, sink_node):
+        return nx.maximum_flow(self.current_graph, source_node, sink_node)
 
     def full_build_graph(self, filepath):
         """
@@ -198,18 +236,32 @@ class GraphStructure:
         self.add_edges()
         return True
 
-    def full_build_graph_with_weights(self, filepath, edge_weight):
+    def full_build_graph_with_weights(self, filepath):
         """
-        Similar usage as full_build_graph_ except this includes adding weighted edges between nodes.
+        Similar usage as full_build_graph except this includes adding weighted edges between nodes.
 
         :param filepath:
-        :param edge_weight:
         :return:
         """
         self.set_filepath(filepath)
         self.add_nodes()
         self.set_node_dependencies()
-        self.add_edge_weights(edge_weight)
+        self.add_edges()
+        self.set_edge_weights()
+        return True
+
+    def full_build_graph_with_random_weights(self, filepath):
+        """
+        Similar usage as full_build_graph_with_weights except this includes adds random weights, mainly for testing.
+
+        :param filepath:
+        :return:
+        """
+        self.set_filepath(filepath)
+        self.add_nodes()
+        self.set_node_dependencies()
+        self.add_edges()
+        self.set_edge_weights(random_input=True)
         return True
 
     def save_graph_output(self, output_filename, with_edge_labels=False):

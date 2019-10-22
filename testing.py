@@ -1,11 +1,9 @@
 from graph_theory import GraphStructure
-
+import networkx as nx
 test = GraphStructure()
 
-test.full_build_graph_with_weights(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template.yml', 3)
-test.save_graph_output('edge_labels_included_no')
-
-
+test.full_build_graph_with_random_weights(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template_two.json')
+test.save_graph_output('setting_weights',with_edge_labels=True)
 """
 Reference for networkx package.
 
