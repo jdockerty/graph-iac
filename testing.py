@@ -1,9 +1,10 @@
 from graph_theory import GraphStructure
-import networkx as nx
+
 test = GraphStructure()
 
-test.full_build_graph_with_random_weights(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template_two.json')
-test.save_graph_output('setting_weights',with_edge_labels=True)
+test.full_build_graph(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template_three.json')
+test.get_paths_between_nodes(source_node='ELBMain', target_node='Glacier',only_shortest=True)
+
 """
 Reference for networkx package.
 

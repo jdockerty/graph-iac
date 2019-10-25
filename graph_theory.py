@@ -219,9 +219,37 @@ class GraphStructure:
                 flat_list.append(item)
         return flat_list
 
-    def graph_flow_analysis(self, source_node, sink_node):
+    def get_flow_max(self, source_node, sink_node):
         return nx.maximum_flow(self.current_graph, source_node, sink_node)
 
+    # def get_residual_network(self, capacity, save_output=False):
+    #     if save_output:
+    #         residual_network = nx.algorithms.flow.build_residual_network(self.current_graph, capacity)
+    #         nx.draw_planar(residual_network)
+    #         nx.draw_networkx_edge_labels(residual_network, pos=nx.planar_layout(residual_network))
+    #         plt.savefig("Saved_Graphs/Residual_net-{}.png".format(random.randint(1, 50000)), format="PNG")
+    #         return residual_network
+    #     else:
+    #         return nx.algorithms.flow.build_residual_network(self.current_graph, capacity)
+    #
+    # def get_flow_dict(self, residual_network):
+    #     return nx.algorithms.flow.build_flow_dict(self.current_graph, residual_network)
+
+    def get_flow_shortest_aug_path(self, source_node, sink_node):
+        residual = nx.algorithms.flow.shortest_augmenting_path(self.current_graph, source_node, sink_node)
+        return residual.edges
+
+    def get_paths_between_nodes(self, source_node, target_node, only_shortest=False):
+        paths = []
+        for path in nx.all_simple_paths(self.current_graph, source_node, target_node):
+                paths.append(path)
+
+        if only_shortest:
+            shortest_path = None
+            for path in paths:
+                shortest_path = path
+                print(shortest_path)
+        print(paths)
     def full_build_graph(self, filepath):
         """
         Utility function that circumvents having to call each individual method in the correct order, only a
