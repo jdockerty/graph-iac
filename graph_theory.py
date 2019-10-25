@@ -220,36 +220,52 @@ class GraphStructure:
         return flat_list
 
     def get_flow_max(self, source_node, sink_node):
+        """
+        Return the maximum flow between a source and sink node, the capacities of the edges must be set on the graph
+        before this will function.
+
+        :param source_node:
+        :param sink_node:
+        :return:
+        """
+
         return nx.maximum_flow(self.current_graph, source_node, sink_node)
 
-    # def get_residual_network(self, capacity, save_output=False):
-    #     if save_output:
-    #         residual_network = nx.algorithms.flow.build_residual_network(self.current_graph, capacity)
-    #         nx.draw_planar(residual_network)
-    #         nx.draw_networkx_edge_labels(residual_network, pos=nx.planar_layout(residual_network))
-    #         plt.savefig("Saved_Graphs/Residual_net-{}.png".format(random.randint(1, 50000)), format="PNG")
-    #         return residual_network
-    #     else:
-    #         return nx.algorithms.flow.build_residual_network(self.current_graph, capacity)
-    #
-    # def get_flow_dict(self, residual_network):
-    #     return nx.algorithms.flow.build_flow_dict(self.current_graph, residual_network)
+    def get_shortest_aug_path(self, source_node, sink_node):
+        """
+        Returns a residual network after using the shortest augmented path algorithm.
 
-    def get_flow_shortest_aug_path(self, source_node, sink_node):
+        :param source_node:
+        :param sink_node:
+        :return:
+        """
         residual = nx.algorithms.flow.shortest_augmenting_path(self.current_graph, source_node, sink_node)
-        return residual.edges
+        return residual
 
     def get_paths_between_nodes(self, source_node, target_node, only_shortest=False):
+        """
+        Returns a list of possible paths between the source and target node on the graph. Optionally, only the shortest
+        path can be returned, in this case you must set the only_shortest to be True.
+
+        :param source_node:
+        :param target_node:
+        :param only_shortest:
+        :return:
+        """
         paths = []
         for path in nx.all_simple_paths(self.current_graph, source_node, target_node):
                 paths.append(path)
 
         if only_shortest:
-            shortest_path = None
+            index = 0
+            index_to_path_len = {}
             for path in paths:
-                shortest_path = path
-                print(shortest_path)
-        print(paths)
+                index_to_path_len[index] = len(path)
+                index += 1
+            return paths[min(index_to_path_len, key=index_to_path_len.get)]
+
+        return paths
+
     def full_build_graph(self, filepath):
         """
         Utility function that circumvents having to call each individual method in the correct order, only a
