@@ -51,6 +51,8 @@ class GraphStructure:
             return self.get_json_to_dict()
         elif self.file_format == 'TERRAFORM':
             pass
+            # Extension idea, although parsing HCL to JSON/usable format seems incredibly time consuming. Something
+            # to look into with extra time.
 
     def check_file_format(self):
         """
@@ -186,6 +188,22 @@ class GraphStructure:
             if isinstance(node_dependencies, Iterable):
                 for singular_node in node_dependencies:
                     self.current_graph.add_edge(node, singular_node)
+
+    def get_sub_graph_from_node(self, specified_node):
+        """
+        Builds a sub-graph based on a specified node from the user. This is useful in larger graphs when a smaller
+        section may be required, displaying only the smaller subsequent graph that is produced from a node and the
+        edges that it has connecting to other nodes.
+
+        :param specified_node:
+        :return:
+        """
+
+        node_adj = self.current_graph.adj[specified_node].keys()
+        all_nodes_sub_graph = list(node_adj)
+        all_nodes_sub_graph.append(specified_node)
+        sub_graph = self.current_graph.subgraph(all_nodes_sub_graph)
+        return sub_graph.copy()
 
     def add_all_edge_weights(self, edge_weights):
         """
@@ -379,4 +397,17 @@ class GraphStructure:
         nx.draw_planar(self.current_graph, with_labels=True)
         nx.draw_networkx_edge_labels(self.current_graph, pos=nx.planar_layout(self.current_graph))
         plt.waitforbuttonpress()
+        return True
+
+    def draw_sub_graph(self, origin_node):
+        """
+        Draws and displays the sub-graph, typically a tree, that is created from the original node. This is useful in
+        very large graphs to display a smaller subset from a particular node.
+
+        :param origin_node:
+        :return:
+        """
+        sub_graph = self.get_sub_graph_from_node(origin_node)
+        nx.draw_planar(sub_graph, with_labels=True)
+        plt.show()
         return True

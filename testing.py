@@ -3,10 +3,10 @@ from graph_theory import GraphStructure
 test = GraphStructure()
 
 test.full_build_graph(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template_three.json')
-
-print(test.get_paths_between_nodes(source_node='ELBMain', target_node='BackupsTwo'))
-print(test.get_paths_between_nodes(source_node='ELBMain', target_node='BackupsTwo',only_shortest=True))
-
+list_nodes = ['ELB', 'S3Bucket']
+print(test.current_graph.nodes)
+print(test.current_graph.edges)
+test.draw_sub_graph('ELBSplitOne')
 """
 Reference for networkx package.
 
