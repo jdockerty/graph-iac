@@ -2,11 +2,8 @@ from graph_theory import GraphStructure
 
 test = GraphStructure()
 
-test.full_build_graph(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template_three.json')
-list_nodes = ['ELB', 'S3Bucket']
-print(test.current_graph.nodes)
-print(test.current_graph.edges)
-test.draw_sub_graph('ELBSplitOne')
+test.full_build_graph(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template_two.json')
+test.draw_and_show()
 """
 Reference for networkx package.
 

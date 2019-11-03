@@ -351,6 +351,12 @@ class GraphStructure:
 
         :return:
         """
+        def map_dependencies(dependency_tag):
+            dependencies_list = nested_lookup(dependency_tag, sub_dict)
+            flat_list = self.remove_nested_list_dependencies(dependencies_list)
+            self.node_dependencies[resources_list[counter]] = flat_list
+            return True
+
         current_json = self.get_file_to_dict()['Resources'] # Pulls the full JSON, BUT ONLY RESOURCES KEY AND AFTER
         counter = 0
         resources_list = list(current_json)
@@ -360,17 +366,22 @@ class GraphStructure:
             try:
 
                 if 'Ref' in get_all_keys(sub_dict):
-                    self.node_dependencies[resources_list[counter]] = nested_lookup('Ref', sub_dict)
-
+                    # dependencies_list = nested_lookup('Ref', sub_dict)
+                    # flat_list = self.remove_nested_list_dependencies(dependencies_list)
+                    # self.node_dependencies[resources_list[counter]] = flat_list
+                    map_dependencies('Ref')
                 elif 'InstanceId' in get_all_keys(sub_dict):
-                    self.node_dependencies[resources_list[counter]] = nested_lookup('InstanceId', sub_dict)
-
+                    # dependencies_list = nested_lookup('InstanceId', sub_dict)
+                    # flat_list = self.remove_nested_list_dependencies(dependencies_list)
+                    # self.node_dependencies[resources_list[counter]] = flat_list
+                    map_dependencies('InstanceId')
                 elif 'DependsOn' in get_all_keys(sub_dict):
                     #  This part could be replicated into other statements if they present
                     #  the nested list issue in the future.
-                    dependencies_list = nested_lookup('DependsOn', sub_dict)
-                    flat_list = self.remove_nested_list_dependencies(dependencies_list)
-                    self.node_dependencies[resources_list[counter]] = flat_list
+                    # dependencies_list = nested_lookup('DependsOn', sub_dict)
+                    # flat_list = self.remove_nested_list_dependencies(dependencies_list)
+                    # self.node_dependencies[resources_list[counter]] = flat_list
+                    map_dependencies('DependsOn')
                 counter += 1
             except KeyError:
                 continue
@@ -383,7 +394,7 @@ class GraphStructure:
         :param labels_on:
         :return:
         """
-        nx.draw_planar(self.current_graph, with_labels=labels_on)
+        nx.draw_spring(self.current_graph, with_labels=labels_on)
         plt.waitforbuttonpress()
         return True
 
@@ -394,8 +405,8 @@ class GraphStructure:
 
         :return:
         """
-        nx.draw_planar(self.current_graph, with_labels=True)
-        nx.draw_networkx_edge_labels(self.current_graph, pos=nx.planar_layout(self.current_graph))
+        nx.draw_spring(self.current_graph, with_labels=True)
+        nx.draw_networkx_edge_labels(self.current_graph, pos=nx.spring_layout(self.current_graph))
         plt.waitforbuttonpress()
         return True
 
@@ -408,6 +419,6 @@ class GraphStructure:
         :return:
         """
         sub_graph = self.get_sub_graph_from_node(origin_node)
-        nx.draw_planar(sub_graph, with_labels=True)
+        nx.draw_spring(sub_graph, with_labels=True)
         plt.show()
         return True
