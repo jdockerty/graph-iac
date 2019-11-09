@@ -2,7 +2,7 @@ from graph_theory import GraphStructure
 
 test = GraphStructure()
 
-test.full_build_graph(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template_two.json')
+test.full_build_graph(r'C:\Users\Jack\PycharmProjects\GraphTheoryToIaC\Files_To_Read\template_test.json')
 test.draw_and_show()
 """
 Reference for networkx package.

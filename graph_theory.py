@@ -386,16 +386,21 @@ class GraphStructure:
             except KeyError:
                 continue
 
-    def draw_and_show(self, labels_on=True):
+    def draw_and_show(self, labels_on=True, planar_layout=True):
         """
         Draws the graph and then displays it in an interactive window with node labels turned on, pressing any key
         or clicking inside of the window will close the window. You can move the window without it closing.
 
         :param labels_on:
+        :param planar_layout:
         :return:
         """
-        nx.draw_spring(self.current_graph, with_labels=labels_on)
-        plt.waitforbuttonpress()
+        if planar_layout:
+            nx.draw_planar(self.current_graph, with_labels=labels_on)
+            plt.waitforbuttonpress()
+        else:
+            nx.draw_spring(self.current_graph, with_labels=labels_on)
+            plt.waitforbuttonpress()
         return True
 
     def draw_and_show_with_edge_labels(self):
